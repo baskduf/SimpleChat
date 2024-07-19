@@ -25,9 +25,11 @@
            <div class="panel shadow1">
             <h1 class="animated fadeInUp animate1" id="title-signup" style="padding-top: 60px;">Welcome ! {{ request.user.username }}</h1>
             <a href="{% url 'logout_process' %}" id="logout-link">
-                <input type="submit" id="login-form-submit" class="login_form button animated fadeInUp animate4" value="Logout">
+                <input type="submit" id="login-form-submit" class="main_form button animated fadeInUp animate4" value="Create Room">
             </a>
-            
+            <a href="{% url 'logout_process' %}" id="logout-link"><input type="submit" id="login-form-submit" class="main_form button animated fadeInUp animate4" value="Join Room"></a>
+            <a href="{% url 'logout_process' %}" id="logout-link"><input type="submit" id="login-form-submit" class="main_form button animated fadeInUp animate4" value="About"></a>
+            <a href="{% url 'logout_process' %}" id="logout-link"><input type="submit" id="login-form-submit" class="main_form button animated fadeInUp animate4" value="Logout"></a>
             </div>
         </div>
         <script>

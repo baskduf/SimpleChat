@@ -1,0 +1,53 @@
+<html lang="en">
+    <link rel="stylesheet" href="/static/login.css">
+    <link rel="stylesheet" href="/static/slide.css">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+        <!-- Font online-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+      
+<!--        Animate.css-->
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+                
+                                
+        
+        <!-- Google JQuery CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/static/slide.js"></script>
+        <script src="/static/login.js"></script>
+
+    </head>
+    <body>
+        <div>
+           <div class="panel shadow1">
+            <h1 class="animated fadeInUp animate1" id="title-signup" style="padding-top: 60px;">Welcome ! {{ request.user.username }}</h1>
+            <div class="slider-2">
+    
+                <div class="side-btns">
+                   <div><span><i class="fas fa-caret-left"></i></i></span></div>
+                   <div><span><i class="fas fa-caret-right"></i></span></div>
+               </div>
+               
+               <div class="slides">
+                   <div class="active room"></div>
+                   <div class="room"></div>
+                   <div class="room"></div>
+                   <div class="room"></div>
+               </div>
+               
+               <div class="page-nav">
+                   <div class="active"></div>
+                   <div></div>
+                   <div></div>
+                   <div></div>
+               </div>
+               <a href="{% url 'logout_process' %}" id="logout-link" ><input type="submit" id="login-form-submit" class="main_form button" value="Join" style="margin-top: 450px;"></a>
+           </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
