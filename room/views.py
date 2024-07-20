@@ -1,9 +1,20 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 
-# Create your views here.
-# Create your views here.
-def index(request):
+def join_room(request):
     if request.user.is_authenticated:
         return render(request, 'room.html')
     else:
-        return render(request, 'login.html')
+        return redirect('login')
+
+def create_room(request):
+    if request.user.is_authenticated:
+        return render(request, 'create-room.html')
+    else:
+        return redirect('login')
+
+def about(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:
+        return redirect('login')

@@ -20,5 +20,7 @@ from django.urls import include
 from room import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('/about', views.about, name='about'),
+    path('/create_room', views.create_room, name='create_room'),
+    path('/join_room', views.join_room, name='join_room'),
 ]

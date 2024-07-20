@@ -1,0 +1,35 @@
+<html lang="en">
+    <link rel="stylesheet" href="/static/login.css">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Font online-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+<!--        Animate.css-->
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+
+
+        <!-- Google JQuery CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+        <div>
+           <div class="panel shadow1"><h1 class="animated fadeInUp animate1" id="title-signup" style="padding-top: 60px; margin-bottom: 120px">Welcome ! {{ request.user.username }}</h1>
+            <form id="login-form" class="login-form" method="post">
+                {% csrf_token %}
+                <fieldset id="login-fieldset">
+                    <input class="login animated fadeInUp animate2" id="room-name" name="username" type="text" placeholder="room-name" value="">
+                </fieldset>
+                <div id="error-message" class="hidden" style="color: #3b0c78;"></div>
+                <input type="submit" id="login-form-submit" class="login_form button animated fadeInUp animate4" style="margin-top: 250px" value="Create">
+            </form>
+            </div>
+        </div>
+    </body>
+</html>

@@ -54,7 +54,3 @@ def login_process(request):
             return JsonResponse({'success': False, 'message': f'Missing field: {e}'}, status=400)
     else:
         return JsonResponse({'success': False, 'message': 'POST 요청이 필요합니다'}, status=400)
-
-
-def login_success(request):
-    return render(request, 'login_success.html')
