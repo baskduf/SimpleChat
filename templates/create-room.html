@@ -21,11 +21,10 @@
     <body>
         <div>
            <div class="panel shadow1"><h1 class="animated fadeInUp animate1" id="title-signup" style="padding-top: 60px; margin-bottom: 120px">Welcome ! {{ request.user.username }}</h1>
-            <form id="login-form" class="login-form" method="post">
+            <form id="login-form" class="login-form" method="post" action="{% url 'create_room_process' %}">
                 {% csrf_token %}
-                <fieldset id="login-fieldset">
-                    <input class="login animated fadeInUp animate2" id="room-name" name="username" type="text" placeholder="room-name" value="">
-                </fieldset>
+                
+                    <input class="login animated fadeInUp animate2" id="room_name" name="room_name" type="text" placeholder="room-name" value="">
                 <div id="error-message" class="hidden" style="color: #3b0c78;"></div>
                 <input type="submit" id="login-form-submit" class="login_form button animated fadeInUp animate4" style="margin-top: 250px" value="Create">
             </form>
