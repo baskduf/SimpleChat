@@ -35,7 +35,7 @@ def create_room_process(request):
 @login_required
 def room_detail_process(request, room_id):
     room = Room.objects.get(id=room_id)
-    return render(request, 'room-detail.html', {'room': room})
+    return render(request, 'chat-room.html', {'room': room})
 
 
 def join_room(request):
@@ -47,6 +47,8 @@ def join_room(request):
     else:
         return redirect('login')
 
+def test(request):
+    return render(request, 'chat-room.html')
 
 def create_room(request):
     if request.user.is_authenticated:

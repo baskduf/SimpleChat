@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/login.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Font online-->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+<!--        Animate.css-->
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+
+
+        <!-- Google JQuery CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"/>
+
+    <style>
+        .chat_wrap { width: 450px; border:1px solid #999; padding:5px; font-size:13px; }
+        .chat_wrap .inner{background-color: rgba(255, 255, 255, 0.5); border-radius:5px; padding:10px; overflow-y:scroll;height: 640px;}
+        .chat_wrap .item{margin-top:15px}
+        .chat_wrap .item:first-child{margin-top:0px}
+        .chat_wrap .item .box{display:inline-block; max-width:180px; position:relative}
+        .chat_wrap .item .box::before{content:""; position:absolute; left:-8px; top:9px; border-top:0px solid transparent; border-bottom:8px solid transparent;border-right:8px solid #fff;}
+        .chat_wrap .item .box .msg {background:#fff; border-radius:10px; padding:8px; text-align:left; word-break: break-word;}
+        .chat_wrap .item .box .time {font-size:11px; color:#999; position:absolute; right: -75px; bottom:5px; width:70px}
+        .chat_wrap .item.mymsg{text-align:right}
+        .chat_wrap .item.mymsg .box::before{left:auto; right:-8px; border-left:8px solid #fee600; border-right:0;}
+        .chat_wrap .item.mymsg .box .msg{background:#fee600}
+        .chat_wrap .item.mymsg .box .time{right:auto; left:-75px}
+        .chat_wrap .item .box{transition:all .3s ease-out; margin:0 0 0 20px;opacity:0}
+        .chat_wrap .item.mymsg .box{transition:all .3s ease-out; margin:0 20px 0 0;margin-right: 5px}
+        .chat_wrap .item.on .box{margin:0; opacity: 1; }
+        .chat_wrap .item.yourmsg {display: flex;
+    justify-content: flex-start; margin-left: 5px /* 텍스트를 왼쪽으로 정렬 */}
+
+        input[type="text"]{border:0; width:100%;background:#ddd; border-radius:5px; height:30px; padding-left:5px; box-sizing:border-box; margin-top:5px}
+        input[type="text"]::placeholder{color:#999}
+    </style>
+
+</head>
+<body>
+    <div class="chat_wrap panel shadow1">
+        <div class="inner">
+            <h1>{{ room.name }}</h1>
+            <hr>
+
+            </div>
+            <div>
+                <input id="chat-message-input" type="text" class="mymsg" placeholder="내용 입력">
+                <button id="chat-message-submit" class="hidden">Send</button>
+            </div>
+
+    </div>
+</body>
+<script>
+    function kickUser(userId) {
+        fetch(`/kick_user/{{ room.id }}/${userId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('유저가 강퇴되었습니다.');
+                location.reload();
+            } else {
+                alert(data.error);
+            }
+        });
+    }
+
+    const roomName = "{{ room.id }}";
+    const chatSocket = new WebSocket(`ws://localhost:8001/ws/chat/${roomName}/`);
+    const userName = "{{ request.user.username }}"
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        // 채팅 메시지를 채팅 로그에 추가
+        var _class = $(this).attr("class");
+        var _tar = $(".chat_wrap .inner").append('<div class="item '+_class+'"><div class="box"><p class="msg">'+`${userName}: ${data.message}`+'</p><span class="time">'+currentTime()+'</span></div></div>');
+
+        var lastItem = $(".chat_wrap .inner").find(".item:last");
+        setTimeout(function(){
+            lastItem.addClass("on");
+            lastItem.addClass("yourmsg");
+        },10);
+
+        var position = lastItem.position().top + $(".chat_wrap .inner").scrollTop();
+        console.log(position);
+
+        $(".chat_wrap .inner").stop().animate({scrollTop:position},500);
+        // 채팅 로그의 끝으로 스크롤을 자동으로 이동
+    };
+
+    chatSocket.onopen = function(e) {
+        console.log("WebSocket connected.");
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    chatSocket.onerror = function(e) {
+        console.log("WebSocket error:", e);
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // Enter key
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+        var currentTime = function(){
+            var date = new Date();
+            var hh = date.getHours();
+            var mm = date.getMinutes();
+            var apm = hh >12 ? "오후":"오전";
+            var ct = apm + " "+hh+":"+mm+"";
+            return ct;
+        }
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username': '{{ request.user.username }}'
+        }));
+        messageInputDom.value = '';
+    };
+</script>
+</html>

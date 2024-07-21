@@ -20,6 +20,7 @@ from django.urls import include
 from room import views
 
 urlpatterns = [
+    path('/test', views.test, name='test'),
     path('/create_room_process', views.create_room_process, name='create_room_process'),
     path('/join/<int:room_id>', views.room_detail_process, name='room_detail_process'),
     path('/about', views.about, name='about'),

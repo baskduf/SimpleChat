@@ -1,6 +1,19 @@
 <html lang="en">
     <link rel="stylesheet" href="/static/login.css">
-
+    <style>
+        #room_name {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 5em;
+            height: 20px;
+            width: 80%;
+            margin: 10px 0;
+            padding: 5px;
+            text-indent: 10px;
+            color: #fff;
+            font-weight: 600;
+        }
+    </style>
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
@@ -20,8 +33,9 @@
     </head>
     <body>
         <div>
-           <div class="panel shadow1"><h1 class="animated fadeInUp animate1" id="title-signup" style="padding-top: 60px; margin-bottom: 120px">Welcome ! {{ request.user.username }}</h1>
+           <div class="panel shadow1">
             <form id="login-form" class="login-form" method="post" action="{% url 'create_room_process' %}">
+                <h1 class="animated fadeInUp animate1" id="title-signup" style="padding-top: 60px; margin-bottom: 120px">Welcome ! {{ request.user.username }}</h1>
                 {% csrf_token %}
                 
                     <input class="login animated fadeInUp animate2" id="room_name" name="room_name" type="text" placeholder="room-name" value="">
