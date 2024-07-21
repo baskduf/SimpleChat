@@ -26,13 +26,13 @@ def create_room_process(request):
         room_name = request.POST['room_name']
         room = Room.objects.create(name=room_name, owner=request.user)
         room.users.add(request.user)
-        return redirect('room_detail_process', room_name=room_name)
+        return redirect('room_detail_process', room_id=room.id)
     return render(request, 'create-room.html')
 
 
 @login_required
-def room_detail_process(request, room_name):
-    room = Room.objects.get(name=room_name)
+def room_detail_process(request, room_id):
+    room = Room.objects.get(id=room_id)
     return render(request, 'room-detail.html', {'room': room})
 
 

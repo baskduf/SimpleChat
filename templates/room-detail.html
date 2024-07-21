@@ -21,7 +21,7 @@
 
 <script>
     function kickUser(userId) {
-        fetch(`/kick_user/{{ room.name }}/${userId}/`, {
+        fetch(`/kick_user/{{ room.id }}/${userId}/`, {
             method: 'POST',
             headers: {
                 'X-CSRFToken': '{{ csrf_token }}'
@@ -38,7 +38,7 @@
         });
     }
 
-    const roomName = "{{ room.name }}";
+    const roomName = "{{ room.id }}";
     const chatSocket = new WebSocket(`ws://localhost:8001/ws/chat/${roomName}/`);
     const userName = "{{ request.user.username }}"
     chatSocket.onmessage = function(e) {

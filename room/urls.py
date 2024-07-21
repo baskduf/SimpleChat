@@ -21,7 +21,7 @@ from room import views
 
 urlpatterns = [
     path('/create_room_process', views.create_room_process, name='create_room_process'),
-    path('/join/<str:room_name>', views.room_detail_process, name='room_detail_process'),
+    path('/join/<int:room_id>', views.room_detail_process, name='room_detail_process'),
     path('/about', views.about, name='about'),
     path('/create_room', views.create_room, name='create_room'),
     path('/join_room', views.join_room, name='join_room'),
