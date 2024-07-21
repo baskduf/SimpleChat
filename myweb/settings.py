@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-m#oh^e1pf74j24k7s!hkmn9e(lrj1z1l#-)wf2w2#s_+ouug(%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# settings.py
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -59,7 +61,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -135,10 +137,12 @@ USE_TZ = True
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    # 한글 경로를 추가합니다.
-]
+
+# 운영 환경에서 정적 파일을 수집할 디렉토리
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# 개발 환경에서 정적 파일을 추가로 찾을 디렉토리
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 
 # Default primary key field type

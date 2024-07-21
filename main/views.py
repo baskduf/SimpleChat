@@ -3,21 +3,25 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 # Create your views here.
+@csrf_exempt
 def index(request):
     if request.user.is_authenticated:
         return render(request, 'index.html')
     else:
         return render(request, 'login.html')
-    
+
+@csrf_exempt
 def logout_process(request):
     logout(request)
     return redirect('/')
 
     
 
+@csrf_exempt
 def signup_process(request):
     # POST 요청에서 데이터 추출
     if request.method == 'POST':
@@ -38,6 +42,7 @@ def signup_process(request):
             return JsonResponse({'success': False, 'message': f'회원가입 중 오류가 발생했습니다: {str(e)}'}, status=500)
     
 
+@csrf_exempt
 def login_process(request):
     if request.method == 'POST':
         try:

@@ -18,7 +18,23 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="/static/slide.js"></script>
         <script src="/static/login.js"></script>
+        <script>
+        // 버튼 클릭 시 실행되는 스크립트
+        function redirectToActiveRoom() {
+            var activeRoom = document.querySelector('.room.active');
+            if (activeRoom) {
+                var roomId = activeRoom.getAttribute('data-room-id');
+                window.location.href = `/room/join/${roomId}`;
+            }
+        }
 
+        document.addEventListener('DOMContentLoaded', function() {
+            var button = document.getElementById('redirect-button');
+            if (button) {
+                button.addEventListener('click', redirectToActiveRoom);
+            }
+        });
+    </script>
     </head>
     <body>
         <div>
@@ -27,24 +43,27 @@
             <div class="slider-2">
     
                 <div class="side-btns">
-                   <div><span><i class="fas fa-caret-left"></i></i></span></div>
+                   <div><span><i class="fas fa-caret-left"></i></span></div>
                    <div><span><i class="fas fa-caret-right"></i></span></div>
                </div>
                
                <div class="slides">
-                   <div class="active room"></div>
-                   <div class="room"></div>
-                   <div class="room"></div>
-                   <div class="room"></div>
+                   {% for room in rooms %}
+                        <div class="room{% if forloop.first %} active{% endif %}" data-room-id="{{ room.room_id }}">
+                            <h3 style="padding-top: 50px">{{ room.room_name }}</h3>
+                        </div>
+                    {% endfor %}
                </div>
-               
+
                <div class="page-nav">
-                   <div class="active"></div>
-                   <div></div>
-                   <div></div>
-                   <div></div>
+                   {% for room in rooms %}
+                        <div class="{% if forloop.first %} active{% endif %}" data-room-id="{{ room.room_id }}">
+                        </div>
+                    {% endfor %}
                </div>
-               <a href="{% url 'logout_process' %}" id="logout-link" ><input type="submit" id="login-form-submit" class="main_form button" value="Join" style="margin-top: 450px;"></a>
+               <a id="redirect-button">
+                    <input type="submit" id="login-form-submit" class="main_form button" value="Join" style="margin-top: 450px;">
+                </a>
            </div>
             </div>
         </div>

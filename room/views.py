@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 # myapp/views.py (추가된 부분)
 from django.http import JsonResponse
 
+current_rooms = []
 
 @login_required
 def kick_user(request, room_name, user_id):
@@ -25,6 +26,7 @@ def create_room_process(request):
     if request.method == 'POST':
         room_name = request.POST['room_name']
         room = Room.objects.create(name=room_name, owner=request.user)
+        current_rooms.append({'room_name': room_name, 'room_id': room.id})
         room.users.add(request.user)
         return redirect('room_detail_process', room_id=room.id)
     return render(request, 'create-room.html')
@@ -38,7 +40,10 @@ def room_detail_process(request, room_id):
 
 def join_room(request):
     if request.user.is_authenticated:
-        return render(request, 'room.html')
+        print(current_rooms)
+        return render(request, 'room.html', {
+            'rooms': current_rooms
+        })
     else:
         return redirect('login')
 
