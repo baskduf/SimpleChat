@@ -77,7 +77,16 @@
     }
 
     const roomName = "{{ room.id }}";
-    const chatSocket = new WebSocket(`ws://localhost:8001/ws/chat/${roomName}/`);
+
+// 현재 페이지의 프로토콜을 사용하여 웹 소켓 프로토콜을 결정합니다.
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+
+// 현재 페이지의 호스트와 포트를 가져옵니다.
+const host = window.location.host;
+
+// 웹 소켓 URL을 생성합니다.
+const chatSocket = new WebSocket(`${protocol}//${host}/ws/chat/${roomName}/`);
+
     const userName = "{{ request.user.username }}"
     chatSocket.onmessage = function(e) {
         const data = JSON.parse(e.data);
