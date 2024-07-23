@@ -1,5 +1,4 @@
 <html lang="en">
-    <link rel="stylesheet" href="/static/login.css">
     <link rel="stylesheet" href="/static/slide.css">
     <head>
         <!-- Required meta tags -->
@@ -16,8 +15,9 @@
         
         <!-- Google JQuery CDN -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="/static/slide.js"></script>
-        <script src="/static/login.js"></script>
+    <script src="{% static 'slide.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+    <script src="{% static 'login.js' %}"></script>
         <script>
         // 버튼 클릭 시 실행되는 스크립트
         function redirectToActiveRoom() {
